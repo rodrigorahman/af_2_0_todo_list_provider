@@ -28,10 +28,13 @@ class _TaskCreatePageState extends State<TaskCreatePage> {
     super.initState();
     DefaultListenerNotifier(
       changeNotifier: widget._controller,
-    ).listener(context: context, successCallback: (notifier, listenerInstance) {
-      listenerInstance.dispose();
-      Navigator.pop(context);
-    },);
+    ).listener(
+      context: context,
+      successCallback: (notifier, listenerInstance) {
+        listenerInstance.dispose();
+        Navigator.pop(context);
+      },
+    );
   }
 
   @override
@@ -101,6 +104,18 @@ class _TaskCreatePageState extends State<TaskCreatePage> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class PhoneEditingController extends TextEditingController {
+  @override
+  set text(String newText) {
+    value = value.copyWith(
+      text: newText,
+      selection: TextSelection(
+          baseOffset: newText.length, extentOffset: newText.length),
+      composing: TextRange.empty,
     );
   }
 }
