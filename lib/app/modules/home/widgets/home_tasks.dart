@@ -19,15 +19,37 @@ class HomeTasks extends StatelessWidget {
           SizedBox(
             height: 20,
           ),
-          Selector<HomeController, String>(
-            selector: (context, controller) =>
-                controller.filterSelected.description,
-            builder: (context, value, child) {
-              return Text(
-                'TASK\'S $value',
-                style: context.titleStyle,
-              );
-            },
+          Row(
+            children: [
+              Expanded(
+                child: Selector<HomeController, String>(
+                  selector: (context, controller) =>
+                      controller.filterSelected.description,
+                  builder: (context, value, child) {
+                    return Text(
+                      'TASK\'S $value',
+                      style: context.titleStyle,
+                    );
+                  },
+                ),
+              ),
+              Visibility(
+                visible: context.select<HomeController, bool>(
+                    (controller) => controller.showFinishingTasks),
+                child: TextButton.icon(
+                  onPressed: () =>
+                      context.read<HomeController>().showOrHideFinishingTasks(),
+                  icon: Icon(
+                    Icons.delete,
+                    color: context.primaryColor,
+                  ),
+                  label: Text(
+                    'LIMPAR FILTRO',
+                    style: context.titleStyle.copyWith(fontSize: 8),
+                  ),
+                ),
+              )
+            ],
           ),
           Column(
               children: context

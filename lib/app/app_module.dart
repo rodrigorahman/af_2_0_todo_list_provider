@@ -25,12 +25,6 @@ class AppModule extends StatelessWidget {
           create: (_) => SqliteConnectionFactory(),
           lazy: false,
         ),
-        Provider<UserRepository>(
-          create: (context) => UserRepositoryImpl(firebaseAuth: context.read()),
-        ),
-        Provider<UserService>(
-            create: (context) =>
-                UserServiceImpl(userRepository: context.read())),
         Provider<TasksRepository>(
           create: (context) =>
               TasksRepositoryImpl(sqliteConnectionFactory: context.read()),
@@ -39,6 +33,12 @@ class AppModule extends StatelessWidget {
           create: (context) =>
               TasksServiceImpl(tasksRepository: context.read()),
         ),
+        Provider<UserRepository>(
+          create: (context) => UserRepositoryImpl(firebaseAuth: context.read()),
+        ),
+        Provider<UserService>(
+            create: (context) =>
+                UserServiceImpl(userRepository: context.read(), tasksService: context.read())),
         ChangeNotifierProvider(
           create: (context) => AuthProvider(
               firebaseAuth: context.read(), userService: context.read())

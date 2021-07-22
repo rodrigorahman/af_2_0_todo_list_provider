@@ -38,4 +38,25 @@ class TasksRepositoryImpl implements TasksRepository {
     ]);
     return result.map((e) => TaskModel.loadFromDB(e)).toList();
   }
+
+  @override
+  Future<void> checkOrUncheckTask(TaskModel task) async {
+    final conn = await _sqliteConnectionFactory.openConnection();
+    final finished = task.finished ? 1 : 0;
+
+    await conn.rawUpdate(
+        'update todo set finalizado = ? where id = ?', [finished, task.id]);
+  }
+
+  @override
+  Future<void> deleteAll() async {
+    var conn = await _sqliteConnectionFactory.openConnection();
+    conn.rawDelete('delete from todo');
+  }
+
+  @override
+  Future<void> deleteById(int id) async {
+    var conn = await _sqliteConnectionFactory.openConnection();
+    conn.rawDelete('delete from todo where id = ?', [id]);
+  }
 }
