@@ -11,14 +11,6 @@ class TasksModule extends TodoListModule {
   TasksModule()
       : super(
           bindings: [
-            Provider<TasksRepository>(
-              create: (context) =>
-                  TasksRepositoryImpl(sqliteConnectionFactory: context.read()),
-            ),
-            Provider<TasksService>(
-              create: (context) =>
-                  TasksServiceImpl(tasksRepository: context.read()),
-            ),
             ChangeNotifierProvider(
               create: (context) => TaskCreateController(tasksService: context.read()),
             )

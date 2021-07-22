@@ -8,11 +8,13 @@ class HomeModule extends TodoListModule {
       : super(
           bindings: [
             ChangeNotifierProvider(
-              create: (context) => HomeController(),
+              create: (context) => HomeController(
+                tasksService: context.read(),
+              ),
             ),
           ],
           routers: {
-            '/home': (context) => HomePage(),
+            '/home': (context) => HomePage(homeController: context.read(),),
           },
         );
 }

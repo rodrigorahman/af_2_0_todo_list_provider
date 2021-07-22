@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:todo_list_provider/app/models/task_model.dart';
 
 class Task extends StatelessWidget {
-  Task({Key? key}) : super(key: key);
+  final TaskModel model;
+  final dateFormat = DateFormat('dd/MM/y');
+
+  Task({Key? key, required this.model}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,25 +22,24 @@ class Task extends StatelessWidget {
         child: ListTile(
           contentPadding: EdgeInsets.all(8),
           leading: Checkbox(
-            value: true,
+            value: model.finished,
             onChanged: (value) {},
           ),
           title: Text(
-            'Descrição da TASK',
+            model.description,
             style: TextStyle(
-              decoration: true ? TextDecoration.lineThrough : null,
+              decoration: model.finished ? TextDecoration.lineThrough : null,
             ),
           ),
           subtitle: Text(
-            '20/07/2021',
+            dateFormat.format(model.dateTime),
             style: TextStyle(
-              decoration: true ? TextDecoration.lineThrough : null,
+              decoration: model.finished ? TextDecoration.lineThrough : null,
             ),
           ),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-            side: BorderSide(width: 1)
-          ),
+              borderRadius: BorderRadius.circular(20),
+              side: BorderSide(width: 1)),
         ),
       ),
     );
